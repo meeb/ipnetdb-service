@@ -1,0 +1,5 @@
+# Run download-ipnetdb.py to refresh the IPNetDB databases every Monday at a random time
+
+* * * * * app /usr/bin/python3 /app/download-ipnetdb.py --save-to /ipnetdb >/proc/1/fd/1 2>/proc/1/fd/2
+* * * * * root date >/proc/1/fd/1 2>/proc/1/fd/2
+
