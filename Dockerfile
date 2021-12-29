@@ -1,4 +1,4 @@
-FROM openresty/openresty:1.19.9.1-4-bullseye-fat
+FROM openresty/openresty:1.19.9.1-4-bullseye
 
 ARG ARCH="amd64"
 ARG S6_VERSION="2.2.0.3"
@@ -32,8 +32,6 @@ RUN set -x && \
 
 # Copy app
 COPY app /app
-COPY app/ipnetdb.lua /usr/local/openresty/nginx/ipnetdb.lua
-COPY app/nginx.conf /usr/local/openresty/nginx/conf/nginx.conf
 
 # Add Pipfile
 COPY Pipfile /app/Pipfile
@@ -51,14 +49,18 @@ RUN set -x && \
         anacron \
         python3 \
         python3-setuptools \
-        python3-pip && \
+        python3-pip \
+        openresty-opm \
+        libmaxminddb-dev && \
     # Install pipenv
-    pip3 --disable-pip-version-check install wheel pipenv && \
+    pip3 --disable-pip-version-check install pipenv && \
     # Create a 'app' user which the application will run as
     groupadd app && \
     useradd -M -d /app -s /bin/bash -g app app && \
     # Install Pipenv Python packages
     pipenv install --system && \
+    # Install opm packages
+    opm install leafo/geoip && \
     # Make sure required directories are created
     mkdir -p /ipnetdb && \
     chmod 0755 /ipnetdb && \
@@ -68,7 +70,7 @@ RUN set -x && \
     rm /app/Pipfile && \
     rm /app/Pipfile.lock && \
     pipenv --clear && \
-    pip3 --disable-pip-version-check uninstall -y pipenv wheel virtualenv && \
+    pip3 --disable-pip-version-check uninstall -y pipenv virtualenv && \
     apt-get -y autoremove && \
     apt-get -y autoclean && \
     rm -rf /var/lib/apt/lists/* && \
@@ -82,6 +84,11 @@ RUN set -x && \
 
 # Copy root
 COPY config/root /
+
+# Install the app into OpenResty
+RUN set -x && \
+    rm -rf /usr/local/openresty/nginx/conf/nginx.conf && \
+    ln -s /app/nginx.conf /usr/local/openresty/nginx/conf/nginx.conf
 
 # Create a healthcheck
 HEALTHCHECK --interval=1m --timeout=10s CMD /app/healthcheck.py http://127.0.0.1/healthcheck

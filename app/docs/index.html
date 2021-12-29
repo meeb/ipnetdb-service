@@ -36,22 +36,22 @@
       <tr>
         <td>GET</td>
         <td>/healthcheck</td>
-        <td>Returns 200/OK and an &quot;ok&quot; response if the service is healthy.</td>
+        <td>Returns 200/OK and a JSON &quot;ok&quot; response if the service is healthy.</td>
       </tr>
       <tr>
         <td>GET</td>
-        <td>/status</td>
-        <td>Returns 200/OK and an JSON response containing details in the currently loaded IPNetDB databases.</td>
+        <td>/index</td>
+        <td>Returns 200/OK and a JSON response containing the index details of the currently loaded IPNetDB databases.</td>
       </tr>
       <tr>
         <td>GET</td>
         <td>/ip/[IP address]</td>
-        <td>Returns 200/OK and an JSON response containing details on the specified IP address. Can be IPv4 or IPv6. Returns 404 if the IP is not in the database.</td>
+        <td>Returns 200/OK and a JSON response containing details on the specified IP address. Can be IPv4 or IPv6. Returns 404 if the IP is not in the database.</td>
       </tr>
       <tr>
         <td>GET</td>
         <td>/as/[AS number]</td>
-        <td>Returns 200/OK and an JSON response containing details on the specified AS number. Returns 404 if the IP is not in the database.</td>
+        <td>Returns 200/OK and a JSON response containing details on the specified AS number. Returns 404 if the IP is not in the database.</td>
       </tr>
     </table>
   </body>
