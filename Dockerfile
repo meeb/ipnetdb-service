@@ -1,4 +1,4 @@
-FROM openresty/openresty:1.19.9.1-4-bullseye
+FROM openresty/openresty:1.21.4.1-6-bullseye
 
 ARG ARCH="amd64"
 ARG S6_VERSION="2.2.0.3"
