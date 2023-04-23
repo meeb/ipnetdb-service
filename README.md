@@ -29,7 +29,7 @@ $ make container
 Or you can pull a tagged container image directly from here:
 
 ```
-ghcr.io/meeb/ipnetdb-service:v0.1.0
+ghcr.io/meeb/ipnetdb-service:v0.1.1
 ```
 
 
@@ -39,14 +39,14 @@ IPNetDB-Service has no configurable environment variables. The container only
 opens an HTTP server on TCP port 80. You can run it via docker with:
 
 ```bash
-$ docker run --rm --name ipnetdb-service -p 80:80 ghcr.io/meeb/ipnetdb-service:v0.1.0
+$ docker run --rm --name ipnetdb-service -p 80:80 ghcr.io/meeb/ipnetdb-service:v0.1.1
 ```
 
 Or for example in a compose stack:
 
 ```yaml
   ipnetdb-service:
-    image: ghcr.io/meeb/ipnetdb-service:v0.1.0
+    image: ghcr.io/meeb/ipnetdb-service:v0.1.1
     container_name: ipnetdb-service
     restart: unless-stopped
     ports:
